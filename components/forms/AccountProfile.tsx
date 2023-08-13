@@ -17,6 +17,8 @@ import * as z from "zod";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   user: {
@@ -33,6 +35,9 @@ interface Props {
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
+  const router = useRouter();
+  const pathname = usePathname();
+
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -62,15 +67,32 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   };
 
   async function onSubmit(values: z.infer<typeof UserValidation>) {
-    const blob = values.profile_photo;
-    const hasImageChange = isBase64Image(blob);
-    if (hasImageChange) {
-      const imgRes = await startUpload(files);
-      if (imgRes && imgRes[0].fileUrl) {
-        values.profile_photo = imgRes[0].fileUrl;
+    try {
+      const blob = values.profile_photo;
+      const hasImageChange = isBase64Image(blob);
+      if (hasImageChange) {
+        const imgRes = await startUpload(files);
+        if (imgRes && imgRes[0].fileUrl) {
+          values.profile_photo = imgRes[0].fileUrl;
+        }
       }
+      //Todo : update the user profile
+      await updateUser({
+        name: values.name,
+        path: pathname,
+        username: values.username,
+        userId: user.id,
+        bio: values.bio,
+        image: values.profile_photo,
+      });
+      if (pathname == "/profile/edit") {
+        router.back();
+      } else {
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err);
     }
-    //Todo : update the user profile
   }
 
   return (
