@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import Thread from "../model/thread.model";
 import User from "../model/user.model";
 import { connectToDB } from "../mongoose";
@@ -97,6 +98,36 @@ export async function fetchThreadById(id: string) {
       })
       .exec();
     return thread;
+  } catch (err: any) {
+    throw new Error(`Failed to fetch thread: ${err.message}`);
+  }
+}
+
+export async function addCommentToThread({
+  threadId,
+  thread,
+  currentUserId,
+  pathname,
+}: {
+  threadId: string;
+  thread: string;
+  currentUserId: string;
+  pathname: string;
+}) {
+  try {
+    const originalThread = await Thread.findById(threadId);
+    if (!originalThread) {
+      throw new Error("No thread found");
+    }
+    const commentThread = await new Thread({
+      text: thread,
+      author: currentUserId,
+      parentId: threadId,
+    });
+    await commentThread.save();
+    originalThread.children.push(commentThread._id);
+    await originalThread.save();
+    revalidatePath(pathname);
   } catch (err: any) {
     throw new Error(`Failed to fetch thread: ${err.message}`);
   }
