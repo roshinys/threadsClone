@@ -65,3 +65,39 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     throw new Error(`Failed to create thread: ${err.message}`);
   }
 }
+
+export async function fetchThreadById(id: string) {
+  try {
+    connectToDB();
+    // Todo populate community
+    const thread = await Thread.findById(id)
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id id name image",
+      })
+      .populate({
+        path: "children",
+        populate: [
+          {
+            path: "author",
+            model: User,
+            select: "_id id parentId name image",
+          },
+          {
+            path: "children",
+            model: Thread,
+            populate: {
+              path: "author",
+              model: User,
+              select: "_id id name parentId image",
+            },
+          },
+        ],
+      })
+      .exec();
+    return thread;
+  } catch (err: any) {
+    throw new Error(`Failed to fetch thread: ${err.message}`);
+  }
+}
