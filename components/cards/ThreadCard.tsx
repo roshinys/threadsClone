@@ -55,7 +55,7 @@ function ThreadCard({
             </Link>
             <div className="thread-card_bar" />
           </div>
-          <div className="flex flex-col w-full">
+          <div className={`${isComment && `mb-10`} flex flex-col w-full`}>
             <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="cursor-pointer text-base-semibold text-light-1">
                 {author.name}
