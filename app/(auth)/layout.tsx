@@ -19,7 +19,11 @@ export default function RootLayout({
     <ClerkProvider>
       {/* clerk is a provider this will all us to use clerk functionality */}
       <html lang="en">
-        <body className={`${inter} bg-dark-1`}>{children}</body>
+        <body className={`${inter} bg-dark-1`}>
+          <div className="w-full flex justify-center items-center min-h-screen">
+            {children}
+          </div>
+        </body>
       </html>
     </ClerkProvider>
   );
