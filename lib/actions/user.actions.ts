@@ -22,7 +22,7 @@ export async function fetchUser(userId: string) {
 }
 
 interface Params {
-  userId: string;
+  userId: String;
   username: string;
   name: string;
   bio: string;
