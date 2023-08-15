@@ -67,6 +67,10 @@ export const POST = async (request: Request) => {
     // Show what evnt?.data sends from above resource
     const { id, name, slug, logo_url, image_url, created_by } =
       evnt?.data ?? {};
+    const communityImage =
+      logo_url ||
+      image_url ||
+      "https://tse1.mm.bing.net/th?id=OIP.1aqA8QgGyfT1znXhuCxIRwHaIe&pid=Api&P=0&h=180";
 
     try {
       // @ts-ignore
@@ -75,7 +79,7 @@ export const POST = async (request: Request) => {
         id,
         name,
         slug,
-        logo_url || image_url,
+        communityImage,
         "org bio",
         created_by
       );
