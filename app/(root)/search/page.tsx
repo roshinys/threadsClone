@@ -1,11 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
-import ProfileHeader from "@/components/shared/ProfileHeader";
 
-import { profileTabs } from "@/constants";
-import Image from "next/image";
-import ThreadsTab from "@/components/cards/ThreadsTab";
 import SearchBar from "@/components/shared/SearchBar";
 import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
