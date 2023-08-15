@@ -209,6 +209,7 @@ export async function addCommentToThread(
   try {
     // Find the original thread by its ID
     const originalThread = await Thread.findById(threadId);
+    console.log(originalThread);
 
     if (!originalThread) {
       throw new Error("Thread not found");
@@ -232,6 +233,7 @@ export async function addCommentToThread(
 
     revalidatePath(path);
   } catch (err) {
+    console.log(err);
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
   }

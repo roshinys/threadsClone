@@ -16,6 +16,7 @@ import {
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+
 import { CommentValidation } from "@/lib/validation/thread";
 import { addCommentToThread } from "@/lib/actions/thread.actions";
 
@@ -36,12 +37,13 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-    await addCommentToThread({
+    await addCommentToThread(
       threadId,
-      thread: values.thread,
-      currentUserId: JSON.parse(currentUserId),
-      pathname: pathname,
-    });
+      values.thread,
+      JSON.parse(currentUserId),
+      pathname
+    );
+
     form.reset();
   };
 
@@ -73,6 +75,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
             </FormItem>
           )}
         />
+
         <Button type="submit" className="comment-form_btn">
           Reply
         </Button>
