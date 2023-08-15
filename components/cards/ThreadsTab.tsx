@@ -1,6 +1,6 @@
 import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
-import ThreadCard from "./ThreadCard";
+import ThreadCard from "../shared/ThreadCard";
 
 interface Props {
   currentUserId: string;
