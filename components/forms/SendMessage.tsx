@@ -3,13 +3,18 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { useState } from "react";
 
-function SendMessage() {
+interface Props {
+  onSendMessage: (messageText: string) => void;
+}
+
+function SendMessage({ onSendMessage }: Props) {
   const [message, setMessage] = useState("");
   const handleSentMessage = () => {
     if (message.trim().length === 0) {
       return;
     }
-    console.log(message);
+    onSendMessage(message);
+    // setMessage("");
   };
   return (
     <div className="searchbar">

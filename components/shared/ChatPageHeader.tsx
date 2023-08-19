@@ -11,8 +11,8 @@ function ChatPageHeader({
   imgUrl: string;
 }) {
   return (
-    <div className="flex-grow bg-green-500 text-light-2 flex space-x-4 h-9 items-center ">
-      <Link href="/" className="pl-3">
+    <div className="flex-grow bg-gray-500 text-light-2 flex space-x-4 h-12 items-center ">
+      <Link href="/chat" className="pl-3">
         <Image src="/assets/back.svg" alt="Back" width={24} height={24} />
       </Link>
       <div className="flex h-7">
