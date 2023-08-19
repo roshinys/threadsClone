@@ -1,7 +1,10 @@
 import ChatMessage from "@/components/cards/ChatMessage";
+import SendMessage from "@/components/forms/SendMessage";
 import ChatPageHeader from "@/components/shared/ChatPageHeader";
+import { Input } from "@/components/ui/input";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const DUMMY_CHAT = [
@@ -52,8 +55,8 @@ async function Page() {
         <ChatPageHeader username={userInfo.username} imgUrl={userInfo.image} />
         <ChatMessage messages={DUMMY_CHAT} />
       </div>
-      <div className="h-20 bg-green-500 fixed bottom-0 left-0 w-full">
-        Enter Message Here
+      <div className="h-20 fixed bottom-0 left-0 w-full p-3">
+        <SendMessage />
       </div>
     </section>
   );
