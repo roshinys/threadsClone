@@ -20,11 +20,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <Head>
-          <link rel="icon" href="../../../favicon.ico" />
+          <link rel="icon" href="../favicon.ico" />
         </Head>
         <body className={inter.className}>
           <TopBar />
-          <main className="flex flex-row">{children}</main>
+          <main className="flex flex-row ">{children}</main>
         </body>
       </html>
     </ClerkProvider>
