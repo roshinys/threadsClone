@@ -11,9 +11,10 @@ interface Props {
   username: string;
   imgUrl: string;
   personType: string;
+  isChat?: Boolean;
 }
 
-function UserCard({ id, name, username, imgUrl, personType }: Props) {
+function UserCard({ id, name, username, imgUrl, personType, isChat }: Props) {
   const router = useRouter();
 
   const isCommunity = personType === "Community";
@@ -39,14 +40,18 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
       <Button
         className="user-card_btn"
         onClick={() => {
-          if (isCommunity) {
-            router.push(`/communities/${id}`);
+          if (!isChat) {
+            if (isCommunity) {
+              router.push(`/communities/${id}`);
+            } else {
+              router.push(`/profile/${id}`);
+            }
           } else {
-            router.push(`/profile/${id}`);
+            router.push(`/chat/${id}`);
           }
         }}
       >
-        View
+        {isChat ? "Chat" : "View"}
       </Button>
     </article>
   );
